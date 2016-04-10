@@ -11,8 +11,10 @@ class MasterViewController: UIViewController {
         super.viewDidLoad()
         
         let searchClient = BingSearchAPIClient()
-        print(searchClient.baseURL)
-        
+        searchClient.searchForMovieWith("Buzz Lightyear") { (imageURLS) in
+            print("we have our image URLs, \(imageURLS)")
+            print("the number of images we have: \(imageURLS.count)")
+        }
     }
 
     override func didReceiveMemoryWarning() {

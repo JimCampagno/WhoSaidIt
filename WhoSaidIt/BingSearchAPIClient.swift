@@ -23,8 +23,7 @@ final class BingSearchAPIClient {
     // MARK: Properties
     var numberOfPhotos: Int = 3 {
         didSet {
-            assert(numberOfPhotos <= 10, "Attempt to set numberOfPhotos on request to be larger than 10.")
-            if numberOfPhotos > 10 { numberOfPhotos = 10 }
+            numberOfPhotos = min(numberOfPhotos, 5)
         }
     }
     var baseURLString: String  {
@@ -37,7 +36,7 @@ final class BingSearchAPIClient {
         return urlString
     }
     var format: Format = .JSON
-    var imageSize: ImageSize? // Not required
+    var imageSize: ImageSize?
     
     
     // MARK: Initializers
@@ -45,7 +44,7 @@ final class BingSearchAPIClient {
     
     convenience init(numberOfPhotos: Int, format: Format, imageSize: ImageSize?) {
         self.init()
-        self.numberOfPhotos = numberOfPhotos
+        self.numberOfPhotos = min(numberOfPhotos, 5)
         self.format  = format
         self.imageSize = imageSize
     }
@@ -57,9 +56,9 @@ extension BingSearchAPIClient {
     
     typealias MovieImageClosure = ([String]) -> ()
     
+    /// This function takes two arguments. One of type string that represents the query, the other a closure that when called takes an argument of type [String] with no return type. The caller can search for anything here to receive back (through the completion closure) an array of ImageURLS of type String. This instance method should be getting called to provide images back to the model to supply it with imageURLS for any actors or movies that need it. I'm using a free account, limited to **5,000** queries a month.
     func searchForMovieWith(query: String, completion: MovieImageClosure) {
-        
-        let escapedQuery = query.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+        guard let escapedQuery = query.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet()) else { print("Unable to encode the query"); return }
         let searchQuery = "%27\(escapedQuery)%27"
         let queryParam = "&Query=\(searchQuery)"
         let urlString = baseURLString + queryParam
@@ -67,71 +66,40 @@ extension BingSearchAPIClient {
         guard let url = NSURL(string: urlString) else { fatalError("Could not create NSURL object.") }
         
         let session = NSURLSession.sharedSession()
-        var request = NSMutableURLRequest(URL: url)
+        let request = NSMutableURLRequest(URL: url)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue(bingSearchAccountKey, forHTTPHeaderField: "Authorization")
         
+        var imageURLS = [String]()
         
+        let dataTask = session.dataTaskWithRequest(request) { (data, response, error) in
+            if let error = error { print(error.localizedDescription); return }
+            if let response = response { print(response) }
+            guard let data = data else { fatalError("Bypassed error, yet we have no data object.") }
+            
+            do {
+                let json = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) as! [String: AnyObject]
+                if let d = json["d"] {
+                    if let results = d["results"] as? [[String: AnyObject]] {
+                        if !results.isEmpty {
+                            let result = results[0]
+                            if let images = result["Image"] as? [[String: AnyObject]] {
+                                for image in images {
+                                    if let imageURL = image["MediaUrl"] as? String {
+                                        imageURLS.append(imageURL)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            } catch {
+                print(":( what happened to the JSON serialization?.")
+            }
+            completion(imageURLS)
+        }
         
-        
-        
-        
-
-//        
-//        
-//        NSString *escpaedQuery = [query stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-//        NSString *searchQuery = [NSString stringWithFormat:@"%%27%@%%27", escpaedQuery];
-//        NSString *urlString = [NSString stringWithFormat:@"https://api.datamarket.azure.com/Bing/Search/v1/Composite?Sources=%%27image%%27&$top=3&$format=json&Query=%@", searchQuery];
-//        NSURL *url = [NSURL URLWithString:urlString];
-//        
-//        NSURLSession *sharedSession = [NSURLSession sharedSession];
-//        
-//        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-//        NSString *value = @"Basic OnpvWkhHb2hrc2lZQ1ovV2l3cDRIa0hMdEJBdERqVjZzQ1R2aDFxTFR0ZFE=";
-//        [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-//        [request addValue:value forHTTPHeaderField:@"Authorization"];
-//        
-//        __block NSMutableArray *imageURLS = [NSMutableArray new];
-//        
-//        NSURLSessionDataTask *dataTask =
-//        [sharedSession dataTaskWithRequest:request
-//        completionHandler:^(NSData * _Nullable data,
-//        NSURLResponse * _Nullable response,
-//        NSError * _Nullable error) {
-//        if (error) {
-//        NSLog(@"%@", error.localizedDescription);
-//        }
-//        
-//        if (response) {
-//        }
-//        
-//        if (data) {
-//        NSData *dataThing = (NSData *)data;
-//        NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:dataThing options:kNilOptions error:&error];
-//        
-//        NSDictionary *d = jsonDict[@"d"];
-//        NSArray *results = d[@"results"];
-//        
-//        if (results.count >= 1) {
-//        NSDictionary *result = results[0];
-//        NSArray *images = result[@"Image"];
-//        
-//        for (NSDictionary *image in images) {
-//        NSString *mediaURL = image[@"MediaUrl"];
-//        [imageURLS addObject:mediaURL];
-//        }
-//        }
-//        
-//        NSLog(@"imageURLS: %@", imageURLS);
-//        }
-//        }];
-//        
-//        [dataTask resume];
-        
-        
-        
-        
+        dataTask.resume()
     }
-    
-    
     
 }
