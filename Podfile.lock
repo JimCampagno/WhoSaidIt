@@ -1,0 +1,13 @@
+PODS:
+  - Firebase (2.5.1)
+  - HTMLReader (0.9.6)
+
+DEPENDENCIES:
+  - Firebase (~> 2.5)
+  - HTMLReader (~> 0.9)
+
+SPEC CHECKSUMS:
+  Firebase: 3565ea88b830f28f2c77ecc524622bc71a20d085
+  HTMLReader: 7e21488ee378afc56ccade8af35840c4e03e434c
+
+COCOAPODS: 0.39.0
