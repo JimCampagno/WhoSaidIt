@@ -14,6 +14,7 @@
 		7D8DE3B21CB8338E00EBD6F9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D8DE3B01CB8338E00EBD6F9 /* LaunchScreen.storyboard */; };
 		7DF732F31CB9D1D300C33B73 /* BingSearchAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF732F21CB9D1D300C33B73 /* BingSearchAPIClient.swift */; };
 		7DF732F51CBAEAB000C33B73 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF732F41CBAEAB000C33B73 /* Secrets.swift */; };
+		7DF732F71CBB06EB00C33B73 /* WikiQuotesAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF732F61CBB06EB00C33B73 /* WikiQuotesAPIClient.swift */; };
 		9329985C9668638F8739A9CD /* Pods_WhoSaidIt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C5EAFC1F78B14E00D9888C1 /* Pods_WhoSaidIt.framework */; };
 /* End PBXBuildFile section */
 
@@ -30,6 +31,7 @@
 		7D8DE3B31CB8338E00EBD6F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7DF732F21CB9D1D300C33B73 /* BingSearchAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BingSearchAPIClient.swift; sourceTree = "<group>"; };
 		7DF732F41CBAEAB000C33B73 /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
+		7DF732F61CBB06EB00C33B73 /* WikiQuotesAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikiQuotesAPIClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 			children = (
 				7D8DE3A51CB8338E00EBD6F9 /* AppDelegate.swift */,
 				7DF732F21CB9D1D300C33B73 /* BingSearchAPIClient.swift */,
+				7DF732F61CBB06EB00C33B73 /* WikiQuotesAPIClient.swift */,
 				7D8DE3A71CB8338E00EBD6F9 /* MasterViewController.swift */,
 				7DF732F41CBAEAB000C33B73 /* Secrets.swift */,
 				7D8DE3AB1CB8338E00EBD6F9 /* Main.storyboard */,
@@ -220,6 +223,7 @@
 				7DF732F51CBAEAB000C33B73 /* Secrets.swift in Sources */,
 				7D8DE3A61CB8338E00EBD6F9 /* AppDelegate.swift in Sources */,
 				7DF732F31CB9D1D300C33B73 /* BingSearchAPIClient.swift in Sources */,
+				7DF732F71CBB06EB00C33B73 /* WikiQuotesAPIClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
