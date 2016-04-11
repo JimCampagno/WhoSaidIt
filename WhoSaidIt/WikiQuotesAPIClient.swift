@@ -15,7 +15,7 @@ final class WikiQuotesAPIClient {
 // MARK: Search Functions
 extension WikiQuotesAPIClient {
     
-    typealias WikiQuotesClosure = ([[String: AnyObject]]) -> ()
+    typealias WikiQuotesClosure = ([String: AnyObject]) -> ()
     
     func getFilmInfoWith(query: String, completion: WikiQuotesClosure) {
         var people = [String: AnyObject]()
@@ -85,7 +85,7 @@ extension WikiQuotesAPIClient {
                 }
             }
             
-            print(people)
+            completion(people)
         }
         
         dataTask.resume()
