@@ -34,7 +34,7 @@ final class Actor {
 extension Actor {
     
     func didSay(quote: String) -> Bool {
-        return quotes.filter { actorQuote in
+        return !quotes.filter { actorQuote in
             return actorQuote == quote
         }.isEmpty
     }
