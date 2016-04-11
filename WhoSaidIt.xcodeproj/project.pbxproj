@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7D1C074F1CBB315200CE95E5 /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D1C074E1CBB315200CE95E5 /* Actor.swift */; };
 		7D8DE3A61CB8338E00EBD6F9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8DE3A51CB8338E00EBD6F9 /* AppDelegate.swift */; };
 		7D8DE3A81CB8338E00EBD6F9 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8DE3A71CB8338E00EBD6F9 /* MasterViewController.swift */; };
 		7D8DE3AD1CB8338E00EBD6F9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D8DE3AB1CB8338E00EBD6F9 /* Main.storyboard */; };
@@ -22,6 +23,7 @@
 		1B666275B171A5ECD5831A03 /* Pods-WhoSaidIt.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhoSaidIt.release.xcconfig"; path = "Pods/Target Support Files/Pods-WhoSaidIt/Pods-WhoSaidIt.release.xcconfig"; sourceTree = "<group>"; };
 		372CD618FC00FA05903B5C67 /* Pods-WhoSaidIt.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhoSaidIt.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WhoSaidIt/Pods-WhoSaidIt.debug.xcconfig"; sourceTree = "<group>"; };
 		3C5EAFC1F78B14E00D9888C1 /* Pods_WhoSaidIt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WhoSaidIt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7D1C074E1CBB315200CE95E5 /* Actor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Actor.swift; sourceTree = "<group>"; };
 		7D8DE3A21CB8338E00EBD6F9 /* WhoSaidIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhoSaidIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D8DE3A51CB8338E00EBD6F9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7D8DE3A71CB8338E00EBD6F9 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 				7DF732F21CB9D1D300C33B73 /* BingSearchAPIClient.swift */,
 				7DF732F61CBB06EB00C33B73 /* WikiQuotesAPIClient.swift */,
 				7D8DE3A71CB8338E00EBD6F9 /* MasterViewController.swift */,
+				7D1C074E1CBB315200CE95E5 /* Actor.swift */,
 				7DF732F41CBAEAB000C33B73 /* Secrets.swift */,
 				7D8DE3AB1CB8338E00EBD6F9 /* Main.storyboard */,
 				7D8DE3AE1CB8338E00EBD6F9 /* Assets.xcassets */,
@@ -222,6 +225,7 @@
 				7D8DE3A81CB8338E00EBD6F9 /* MasterViewController.swift in Sources */,
 				7DF732F51CBAEAB000C33B73 /* Secrets.swift in Sources */,
 				7D8DE3A61CB8338E00EBD6F9 /* AppDelegate.swift in Sources */,
+				7D1C074F1CBB315200CE95E5 /* Actor.swift in Sources */,
 				7DF732F31CB9D1D300C33B73 /* BingSearchAPIClient.swift in Sources */,
 				7DF732F71CBB06EB00C33B73 /* WikiQuotesAPIClient.swift in Sources */,
 			);
