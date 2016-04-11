@@ -41,59 +41,54 @@ extension WikiQuotesAPIClient {
             let home = HTMLDocument(data: data, contentTypeHeader: contentType)
             guard let elements = home.rootElement?.children.array as? [HTMLElement] else { fatalError("Can't create children array off of rootElement from HTMLDocument.") }
             
-            var character: String
+            var character = ""
             
             for element in elements {
                 for node in element.children {
                     if self.isHeading2(node) {
-                        character = node.textContent.stringByReplacingOccurrencesOfString("edit", withString: "")
-                        //TODO: Is the value supposed to be an Array of String's?
+                        character = node.textContent.stringByReplacingOccurrencesOfString("[edit]", withString: "")
                         people[character] = [String]()
                     } else if self.isUnorderedList(node) {
                         let textContent = node.textContent
-                        let quotes = textContent.componentsSeparatedByString("\n")
+                        let quotes = textContent.componentsSeparatedByString("\\n")
+                        
                         for rawQuote in quotes {
                             var quote = rawQuote
                             var rangeOfLowercaseU = quote.rangeOfString("\\u", options: NSStringCompareOptions.BackwardsSearch, range: nil, locale: nil)
                             var rangeOfUppercaseU = quote.rangeOfString("\\U", options: NSStringCompareOptions.BackwardsSearch, range: nil, locale: nil)
                             
-                            
-                            
                             while rangeOfLowercaseU != nil {
                                 let range = rangeOfLowercaseU!
-                                let extendedRange = Range.init(start: range.startIndex, end: range.startIndex + 4)
-                                
-//                                let rangeFourCharactersOut = Range(rangeOfLowercaseU.)
-                                
-                                
+                                let extendedRange = range.startIndex...range.startIndex.advancedBy(4)
+                                quote = quote.stringByReplacingCharactersInRange(extendedRange, withString: " ")
+                                rangeOfLowercaseU = quote.rangeOfString("\\u", options: NSStringCompareOptions.BackwardsSearch, range: nil, locale: nil)
                             }
                             
-                           
-                        
+                            while rangeOfUppercaseU != nil {
+                                let range = rangeOfUppercaseU!
+                                let extendedRange = range.startIndex...range.startIndex.advancedBy(4)
+                                quote = quote.stringByReplacingCharactersInRange(extendedRange, withString: " ")
+                                rangeOfUppercaseU = quote.rangeOfString("\\U", options: NSStringCompareOptions.BackwardsSearch, range: nil, locale: nil)
+                            }
                             
+                            quote = quote.stringByReplacingOccurrencesOfString("\\", withString: "")
                             
+                            if !quote.isEmpty {
+                                if let quotes = people[character] as? [String] {
+                                    var newQuotes = quotes
+                                    newQuotes.append(quote)
+                                    people[character] = newQuotes
+                                }
+                            }
                         }
-                        
-                        
-                        
-                        
                     }
-                    
-
-                    //
-                    //    while (range.length != 0) {
-                    //    NSRange newRange = NSMakeRange(range.location, range.length + 4);
-                    //    quote = [quote stringByReplacingCharactersInRange:newRange
-                    //    withString:@" "];
-                    //    range = [quote rangeOfString:@"\\u" options: NSBackwardsSearch];
-                    //    }
-
-                    
-                    
                 }
             }
+            
+            print(people)
         }
-        dataTask.resume()   
+        
+        dataTask.resume()
     }
 }
 
@@ -118,79 +113,3 @@ extension WikiQuotesAPIClient {
 
 
 
-
-//    for (HTMLElement *element in elements) {
-//    for (HTMLElement *node in element.children) {
-//
-//    if ([self isHeading2HTMLElement:node]) {
-//    character = [node.textContent stringByReplacingOccurrencesOfString:@"[edit]"
-//    withString:@""];
-//    [people setObject:[@[] mutableCopy]
-//    forKey:character];
-//
-//    } else if ([self isUnorderedListHTMLElement:node]) {
-//
-//    NSString *thing = node.textContent;
-//    NSArray *quotes = [thing componentsSeparatedByString:@"\\n"];
-//
-//    for (NSInteger i = 0; i < quotes.count; i++) {
-//    NSString *quote = quotes[i];
-//
-//    NSRange range;
-//    NSRange otherRange;
-//    range = [quote rangeOfString:@"\\u" options: NSBackwardsSearch];
-//    otherRange = [quote rangeOfString:@"\\U" options:NSBackwardsSearch];
-//
-//    while (range.length != 0) {
-//    NSRange newRange = NSMakeRange(range.location, range.length + 4);
-//    quote = [quote stringByReplacingCharactersInRange:newRange
-//    withString:@" "];
-//    range = [quote rangeOfString:@"\\u" options: NSBackwardsSearch];
-//    }
-//
-//    while (otherRange.length != 0) {
-//    NSRange newRange = NSMakeRange(range.location, range.length + 4);
-//    quote = [quote stringByReplacingCharactersInRange:newRange
-//    withString:@" "];
-//    range = [quote rangeOfString:@"\\U" options: NSBackwardsSearch];
-//    }
-//
-//
-//
-//    quote = [quote stringByReplacingOccurrencesOfString:@"\\"
-//    withString:@""];
-//
-//
-//
-//    if (quote.length >= 1) {
-//    [people[character] addObject:quote];
-//    }
-//
-//
-//
-//    }
-//    }
-//    }
-//    }
-//
-//    NSLog(@"%@", people);
-//
-//    }];
-//
-//    [dataTask resume];
-//    }
-//
-//
-//
-//
-//    - (BOOL)isUnorderedListHTMLElement:(HTMLElement *)element {
-//        return ([element isKindOfClass:[HTMLElement class]] && [[HTMLSelector selectorForString:@"ul"] matchesElement:element]);
-//        }
-//
-//        - (BOOL)isHeading2HTMLElement:(HTMLElement *)element {
-//            return ([element isKindOfClass:[HTMLElement class]] && [[HTMLSelector selectorForString:@"h2"] matchesElement:element]);
-//            }
-//
-//            - (BOOL)isSpecificElementString:(NSString *)string withElement:(HTMLElement *)element {
-//                return ([element isKindOfClass:[HTMLElement class]] && [[HTMLSelector selectorForString:string] matchesElement:element]);
-//}
