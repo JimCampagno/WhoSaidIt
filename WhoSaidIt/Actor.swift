@@ -31,8 +31,15 @@ final class Actor {
         if let imageURLS = imageURLS { self.imageURLS = imageURLS }
     }
     
+}
+
+// MARK: Quote Methods
+extension Actor {
     
-    
-    
+    func didSay(quote: String) -> Bool {
+        return quotes.filter { actorQuote in
+            return actorQuote == quote
+        }.isEmpty
+    }
     
 }
