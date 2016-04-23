@@ -13,6 +13,8 @@ class MasterViewController: UIViewController {
         let wikiQuotesClient = WikiQuotesAPIClient()
         wikiQuotesClient.getFilmInfoWith("Up_(2009_film)") { (stuff) in
             
+            print(stuff)
+            
         }
         
 //        let searchClient = BingSearchAPIClient()

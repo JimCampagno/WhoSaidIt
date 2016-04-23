@@ -23,11 +23,11 @@ final class Movie {
 // MARK: Quote Methods
 extension Movie {
     
-    func actorWhoSaidQuote(quote: String) -> Actor? {
-        for actor in actors {
-            if actor.didSay(quote) { return actor }
-        }
-        return nil
-    }
+//    func actorWhoSaidQuote(quote: String) -> Actor? {
+//        for actor in actors {
+//            if actor.didSay(quote) { return actor }
+//        }
+//        return nil
+//    }
     
 }

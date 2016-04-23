@@ -10,8 +10,8 @@ import GameKit
 final class Actor {
     
     let name: String
-    var movie: String
-    var quotes: [String] = []
+    unowned let movie: Movie
+    let quotes: [String]
     var imageURLS: [String] = []
     var images: [UIImage] = []
     var displayImage: UIImage? {
@@ -21,11 +21,10 @@ final class Actor {
         return image
     }
     
-    init(name: String, movie: String, quotes: [String]?, imageURLS: [String]? ) {
+    init(name: String, movie: Movie, quotes: [String]) {
         self.name = name
         self.movie = movie
-        if let quotes = quotes { self.quotes = quotes }
-        if let imageURLS = imageURLS { self.imageURLS = imageURLS }
+        self.quotes = quotes
     }
     
 }
@@ -33,10 +32,35 @@ final class Actor {
 // MARK: Quote Methods
 extension Actor {
     
-    func didSay(quote: String) -> Bool {
-        return !quotes.filter { actorQuote in
-            return actorQuote == quote
-        }.isEmpty
-    }
+//    func didSay(quote: String) -> Bool {
+//        return !quotes.filter { actorQuote in
+//            return actorQuote == quote
+//        }.isEmpty
+//    }
     
+}
+
+// MARK: Protocols
+
+extension Actor: CustomStringConvertible {
+    var description: String {
+        var descriptionDictionary: [String: AnyObject] = [:]
+        descriptionDictionary["name"] = name
+        descriptionDictionary["quotes"] = quotes
+        descriptionDictionary["movie"] = movie.movieTitle
+        return "\(descriptionDictionary)"
+    }
+}
+
+extension Actor: Equatable {}
+func ==(lhs: Actor, rhs: Actor) -> Bool {
+    return lhs.name == rhs.name && lhs.hashValue == rhs.hashValue
+}
+
+extension Actor: Hashable {
+    var hashValue: Int {
+        return quotes.reduce(0) { initial, quote in
+            initial + quote.hashValue
+        }
+    }
 }

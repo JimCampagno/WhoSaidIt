@@ -85,7 +85,9 @@ extension WikiQuotesAPIClient {
                 }
             }
             
-            completion(people)
+            let actors = people as! [String: [String]]
+            self.createMovie(query, withActors: actors)
+//            completion(people)
         }
         
         dataTask.resume()
@@ -108,6 +110,35 @@ extension WikiQuotesAPIClient {
     }
     
 }
+
+
+// MARK: Parse Methods to create Movie Objects
+extension WikiQuotesAPIClient {
+    
+    private func createMovie(movie: String, withActors actors: [String: [String]]) {
+        let newMovie = Movie(movieTitle: movie, movieImageURL: nil)
+        
+        for (actor, quotes) in actors {
+            if actor.lowercaseString.containsString("about") { continue }
+            let newActor = Actor(name: actor, movie: newMovie, quotes: quotes)
+            newMovie.actors.append(newActor)
+        }
+        
+
+        for actor in newMovie.actors {
+            print("--------------------")
+            print(actor)
+            print("--------------------\n\n\n")
+        }
+        
+        
+        
+        
+    }
+    
+    
+}
+
 
 
 
